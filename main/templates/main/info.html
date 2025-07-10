@@ -1,0 +1,10 @@
+{% extends 'main/base.html' %}
+
+{% block title %}자무 설명{% endblock %}
+
+{% block content %}
+<h1>자무 설명 화면입니다</h1>
+<p>자무에 대한 자세한 설명을 확인하세요.</p>
+<a href="{% url 'main:order' %}" class="btn btn-secondary">자무 주문법으로</a>
+<a href="{% url 'main:waiting' %}" class="btn">대기 화면으로</a>
+{% endblock %}

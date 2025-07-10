@@ -1,0 +1,10 @@
+{% extends 'main/base.html' %}
+
+{% block title %}홈스크린{% endblock %}
+
+{% block content %}
+<h1>홈스크린입니다</h1>
+<p>자무 웹사이트에 오신 것을 환영합니다!</p>
+<a href="{% url 'main:issues' %}" class="btn">헬스 이슈로 이동</a>
+<a href="{% url 'main:chatbot' %}" class="btn">AI 챗봇으로 이동</a>
+{% endblock %}

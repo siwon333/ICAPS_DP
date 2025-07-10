@@ -1,0 +1,138 @@
+{% extends 'main/base.html' %}
+
+{% block title %}AI 챗봇{% endblock %}
+
+{% block content %}
+<h1>AI 챗봇 화면입니다</h1>
+<p>AI 챗봇과 대화해보세요!</p>
+
+<!-- 채팅 영역 -->
+<div id="chat-container" style="background: #f8f9fa; border-radius: 10px; padding: 20px; margin: 20px 0; height: 400px; overflow-y: auto; border: 1px solid #dee2e6;">
+    <div class="message bot-message">
+        <div class="message-content">
+            <strong>🤖 챗봇:</strong> 안녕하세요! 무엇을 도와드릴까요?
+        </div>
+    </div>
+</div>
+
+<!-- 입력 영역 -->
+<div style="display: flex; gap: 10px; margin: 20px 0;">
+    <input type="text" id="user-input" placeholder="메시지를 입력하세요..." style="flex: 1; padding: 12px; border: 1px solid #ddd; border-radius: 5px; font-size: 16px;">
+    <button onclick="sendMessage()" class="btn" style="margin: 0;">전송</button>
+</div>
+
+<!-- 로딩 표시 -->
+<div id="loading" style="display: none; text-align: center; margin: 10px 0;">
+    <div style="display: inline-block; width: 20px; height: 20px; border: 3px solid #f3f3f3; border-top: 3px solid #007bff; border-radius: 50%; animation: spin 1s linear infinite;"></div>
+    <span style="margin-left: 10px;">챗봇이 답변을 생각하고 있어요...</span>
+</div>
+
+<div style="margin-top: 30px;">
+    <a href="{% url 'main:home' %}" class="btn">홈으로</a>
+</div>
+
+<style>
+@keyframes spin {
+    0% { transform: rotate(0deg); }
+    100% { transform: rotate(360deg); }
+}
+
+.message {
+    margin-bottom: 15px;
+    padding: 12px;
+    border-radius: 8px;
+    max-width: 80%;
+}
+
+.user-message {
+    background-color: #007bff;
+    color: white;
+    margin-left: auto;
+    text-align: right;
+}
+
+.bot-message {
+    background-color: #e9ecef;
+    color: #333;
+    margin-right: auto;
+}
+
+.message-content {
+    word-wrap: break-word;
+}
+
+#chat-container {
+    display: flex;
+    flex-direction: column;
+}
+</style>
+
+<script>
+function sendMessage() {
+    const userInput = document.getElementById('user-input');
+    const chatContainer = document.getElementById('chat-container');
+    const loading = document.getElementById('loading');
+    const message = userInput.value.trim();
+    
+    if (message === '') return;
+    
+    // 사용자 메시지 추가
+    const userMessageDiv = document.createElement('div');
+    userMessageDiv.className = 'message user-message';
+    userMessageDiv.innerHTML = `<div class="message-content"><strong>👤 나:</strong> ${message}</div>`;
+    chatContainer.appendChild(userMessageDiv);
+    
+    // 입력창 초기화
+    userInput.value = '';
+    
+    // 스크롤을 맨 아래로
+    chatContainer.scrollTop = chatContainer.scrollHeight;
+    
+    // 로딩 표시
+    loading.style.display = 'block';
+    
+    // API 호출
+    fetch('{% url "main:chatbot_api" %}', {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+            'message': message
+        })
+    })
+    .then(response => response.json())
+    .then(data => {
+        loading.style.display = 'none';
+        
+        // 챗봇 응답 추가
+        const botMessageDiv = document.createElement('div');
+        botMessageDiv.className = 'message bot-message';
+        botMessageDiv.innerHTML = `<div class="message-content"><strong>🤖 챗봇:</strong> ${data.response}</div>`;
+        chatContainer.appendChild(botMessageDiv);
+        
+        // 스크롤을 맨 아래로
+        chatContainer.scrollTop = chatContainer.scrollHeight;
+    })
+    .catch(error => {
+        loading.style.display = 'none';
+        console.error('Error:', error);
+        
+        // 에러 메시지 표시
+        const errorMessageDiv = document.createElement('div');
+        errorMessageDiv.className = 'message bot-message';
+        errorMessageDiv.innerHTML = `<div class="message-content"><strong>🤖 챗봇:</strong> 죄송해요, 오류가 발생했습니다. 다시 시도해주세요.</div>`;
+        chatContainer.appendChild(errorMessageDiv);
+        
+        chatContainer.scrollTop = chatContainer.scrollHeight;
+    });
+}
+
+// 엔터 키로 메시지 전송
+document.getElementById('user-input').addEventListener('keypress', function(e) {
+    if (e.key === 'Enter') {
+        sendMessage();
+    }
+});
+</script>
+{% endblock %}

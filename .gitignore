@@ -1,0 +1,9 @@
+local_settings.py
+.env
+*.env
+*.sqlite3
+db.sqlite3
+__pycache__/
+*.pyc
+*.pyo
+venv/

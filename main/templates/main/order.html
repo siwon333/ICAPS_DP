@@ -1,0 +1,10 @@
+{% extends 'main/base.html' %}
+
+{% block title %}자무 주문법{% endblock %}
+
+{% block content %}
+<h1>자무 주문법 화면입니다</h1>
+<p>자무를 주문하는 방법을 안내합니다.</p>
+<a href="{% url 'main:issues' %}" class="btn btn-secondary">헬스 이슈로</a>
+<a href="{% url 'main:info' %}" class="btn">자무 설명으로</a>
+{% endblock %}

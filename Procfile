@@ -1,0 +1,1 @@
+web: gunicorn Icaps.wsgi --log-file -

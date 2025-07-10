@@ -1,0 +1,10 @@
+{% extends 'main/base.html' %}
+
+{% block title %}헬스 이슈{% endblock %}
+
+{% block content %}
+<h1>헬스 이슈 화면입니다</h1>
+<p>건강 관련 정보를 확인하세요.</p>
+<a href="{% url 'main:home' %}" class="btn btn-secondary">홈으로</a>
+<a href="{% url 'main:order' %}" class="btn">자무 주문법으로</a>
+{% endblock %}

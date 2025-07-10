@@ -1,0 +1,10 @@
+{% extends 'main/base.html' %}
+
+{% block title %}완성{% endblock %}
+
+{% block content %}
+<h1>완성 화면입니다</h1>
+<p>모든 작업이 완료되었습니다! 🎉</p>
+<a href="{% url 'main:waiting' %}" class="btn btn-secondary">대기 화면으로</a>
+<a href="{% url 'main:home' %}" class="btn">홈으로</a>
+{% endblock %}
