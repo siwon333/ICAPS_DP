@@ -59,19 +59,80 @@ def chatbot_api(request):
             
             # 새로운 OpenAI v1.0+ API 호출 방식
             response = client.chat.completions.create(
-                model="gpt-3.5-turbo",  # 또는 "gpt-4"
+                model="gpt-4",  # 또는 "gpt-4"
                 messages=[
                     {
                         "role": "system", 
-                        "content": """You are a friendly AI assistant for a website that sells Jamu (a special herbal health drink). 
-                        Please perform the following roles:
-                        1. Explain the health benefits and features of Jamu.
-                        2. Guide users on how to place an order and the ordering process.
-                        3. Provide helpful answers to health-related questions.
-                        4. Maintain a friendly and helpful tone in conversations.
-                        5. Respond in english and use appropriate emojis to make the conversation feel more friendly.
+                        "content": """주어진 레시피와 재료만 사용하여 아래 조건을 모두 지켜 요리법을 작성해 주세요.
+
+                        아래 명시된 재료만 사용할 것
                         
-                        Always provide polite and helpful responses."""
+                        아래 명시된 조리 순서만 포함할 것
+                        
+                        절대 새로운 재료나 새로운 조리법, 도구를 추가하지 말 것
+                        
+                        순서나 단계, 재료 명칭은 아래와 정확히 일치시킬 것
+                        
+                        창의적 변형, 생략, 첨가 없이 아래 과정 그대로 사용할 것
+                        
+                        🍫 1. 솔방울 케이크
+                        재료:
+                        
+                        몽쉘 1개
+                        
+                        초코 시리얼
+                        
+                        만드는 순서:
+                        
+                        몽쉘을 손으로 주물러 으깬다.
+                        
+                        손으로 타원형 또는 동그란 모양을 만든다.
+                        
+                        초코 시리얼을 콕콕 꽂아서 꾸민다.
+                        
+                        접시에 담아 완성한다.
+                        
+                        🍌 2. 바나나 식빵 롤
+                        재료:
+                        
+                        식빵 1장 (가장자리 제거)
+                        
+                        바나나 1/2개
+                        
+                        땅콩버터 약간
+                        
+                        만드는 순서:
+                        
+                        식빵의 가장자리를 손으로 제거한다.
+                        
+                        식빵을 손으로 눌러 납작하게 만든다.
+                        
+                        땅콩버터를 바른다.
+                        
+                        바나나 반 개를 올린다.
+                        
+                        돌돌 말아 김밥처럼 만든다.
+                        
+                        플라스틱 빵칼로 먹기 좋게 썬다.
+                        
+                        🎨 3. 꿀호빵 꾸미기
+                        재료:
+                        
+                        커스터드 빵 1개
+                        
+                        초코펜 1개
+                        
+                        엠앤엠즈 (또는 젤리, 초코볼 등)
+                        
+                        만드는 순서:
+                        
+                        커스터드 빵을 접시에 올린다.
+                        
+                        초코펜으로 얼굴이나 무늬를 그린다.
+                        
+                        엠앤엠즈로 눈, 코, 장식을 붙인다.
+                        
+                        꾸민 후 감상하고 맛있게 먹는다."""
                     },
                     {
                         "role": "user", 
